@@ -1,0 +1,43 @@
+﻿@page "/film/create"
+@using CRUD.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3>Añadir socio</h3>
+
+<EditForm Model="@_film" OnValidSubmit="Post">
+    <div class="form-group">
+        <label>Nombre Completo:</label>
+        <InputText @bind-Value="_film.NombreCompleto" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Usuario:</label>
+        <InputText @bind-Value="_film.usuario" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Clave:</label>
+        <InputText @bind-Value="_film.clave" class="form-control" type="password" />
+    </div>
+    <div class="form-group">
+        <label>Celular:</label>
+        <InputText @bind-Value="_film.celular" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Email:</label>
+        <InputText @bind-Value="_film.Email" class="form-control" type="email" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-success" value="Agregar socio" />
+    </div>
+</EditForm>
+
+@code {
+    private Film _film = new();
+
+    private async Task Post()
+    {
+        await Http.PostAsJsonAsync<Film>("/api/Films/", _film);
+        Navigation.NavigateTo("/films");
+    }
+}
+
